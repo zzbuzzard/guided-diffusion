@@ -95,11 +95,13 @@ def create_model_and_diffusion(
     resblock_updown,
     use_fp16,
     use_new_attention_order,
+    in_channels,
 ):
     model = create_model(
         image_size,
         num_channels,
         num_res_blocks,
+        in_channels,
         channel_mult=channel_mult,
         learn_sigma=learn_sigma,
         class_cond=class_cond,
@@ -131,6 +133,7 @@ def create_model(
     image_size,
     num_channels,
     num_res_blocks,
+    in_channels,
     channel_mult="",
     learn_sigma=False,
     class_cond=False,
@@ -165,7 +168,7 @@ def create_model(
 
     return UNetModel(
         image_size=image_size,
-        in_channels=3,
+        in_channels=in_channels,
         model_channels=num_channels,
         out_channels=(3 if not learn_sigma else 6),
         num_res_blocks=num_res_blocks,
